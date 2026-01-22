@@ -7,8 +7,8 @@ use std::time::{Duration, Instant};
 use xai_thunder_proto::{LightPost, TweetDeleteEvent};
 
 use crate::config::{
-    DELETE_EVENT_KEY, MAX_ORIGINAL_POSTS_PER_AUTHOR, MAX_REPLY_POSTS_PER_AUTHOR,
-    MAX_TINY_POSTS_PER_USER_SCAN, MAX_VIDEO_POSTS_PER_AUTHOR,
+    DELETE_EVENT_KEY, MATwitter_ORIGINAL_POSTS_PER_AUTHOR, MATwitter_REPLY_POSTS_PER_AUTHOR,
+    MATwitter_TINY_POSTS_PER_USER_SCAN, MATwitter_VIDEO_POSTS_PER_AUTHOR,
 };
 use crate::metrics::{
     POST_STORE_DELETED_POSTS, POST_STORE_DELETED_POSTS_FILTERED, POST_STORE_ENTITY_COUNT,
@@ -86,7 +86,7 @@ impl PostStore {
     pub fn insert_posts(&self, mut posts: Vec<LightPost>) {
         // Filter to keep only posts created in the last retention_seconds and not from the future
         let current_time = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
+            .duration_since(std::time::UNITwitter_EPOCH)
             .unwrap_or_default()
             .as_secs() as i64;
         posts.retain(|p| {
@@ -178,7 +178,7 @@ impl PostStore {
         let video_posts = self.get_posts_from_map(
             &self.video_posts_by_user,
             user_ids,
-            MAX_VIDEO_POSTS_PER_AUTHOR,
+            MATwitter_VIDEO_POSTS_PER_AUTHOR,
             exclude_tweet_ids,
             &HashSet::new(),
             start_time,
@@ -202,7 +202,7 @@ impl PostStore {
         let mut all_posts = self.get_posts_from_map(
             &self.original_posts_by_user,
             user_ids,
-            MAX_ORIGINAL_POSTS_PER_AUTHOR,
+            MATwitter_ORIGINAL_POSTS_PER_AUTHOR,
             exclude_tweet_ids,
             &HashSet::new(),
             start_time,
@@ -212,7 +212,7 @@ impl PostStore {
         let secondary_posts = self.get_posts_from_map(
             &self.secondary_posts_by_user,
             user_ids,
-            MAX_REPLY_POSTS_PER_AUTHOR,
+            MATwitter_REPLY_POSTS_PER_AUTHOR,
             exclude_tweet_ids,
             &following_users_set,
             start_time,
@@ -267,7 +267,7 @@ impl PostStore {
                     .iter()
                     .rev()
                     .filter(|post| !exclude_tweet_ids.contains(&post.post_id))
-                    .take(MAX_TINY_POSTS_PER_USER_SCAN);
+                    .take(MATwitter_TINY_POSTS_PER_USER_SCAN);
 
                 // Perform light doc lookup to get full LightPost data. This will also filter deleted posts
                 // Note: We copy the value immediately to release the read lock and avoid potential
@@ -416,7 +416,7 @@ impl PostStore {
 
         tokio::task::spawn_blocking(move || {
             let current_time = std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
+                .duration_since(std::time::UNITwitter_EPOCH)
                 .unwrap()
                 .as_secs();
 

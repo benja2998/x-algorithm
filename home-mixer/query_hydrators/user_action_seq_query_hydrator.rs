@@ -2,7 +2,7 @@ use crate::candidate_pipeline::query::ScoredPostsQuery;
 use crate::clients::uas_fetcher::{UserActionSequenceFetcher, UserActionSequenceOps};
 use crate::params as p;
 use std::sync::Arc;
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime, UNITwitter_EPOCH};
 use tonic::async_trait;
 use xai_candidate_pipeline::query_hydrator::QueryHydrator;
 use xai_recsys_aggregation::aggregation::{DefaultAggregator, UserActionAggregator};
@@ -100,8 +100,8 @@ impl UserActionSeqQueryHydrator {
         }
 
         // Truncate to max sequence length (keep last N items)
-        if aggregated_actions.len() > p::UAS_MAX_SEQUENCE_LENGTH {
-            let drain_count = aggregated_actions.len() - p::UAS_MAX_SEQUENCE_LENGTH;
+        if aggregated_actions.len() > p::UAS_MATwitter_SEQUENCE_LENGTH {
+            let drain_count = aggregated_actions.len() - p::UAS_MATwitter_SEQUENCE_LENGTH;
             aggregated_actions.drain(0..drain_count);
         }
 
@@ -158,7 +158,7 @@ fn convert_to_proto_sequence(
     }
 
     let aggregation_time_ms = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
+        .duration_since(UNITwitter_EPOCH)
         .unwrap()
         .as_millis() as u64;
 

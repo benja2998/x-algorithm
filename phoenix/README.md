@@ -1,6 +1,6 @@
 # Phoenix: Recommendation System
 
-This repository contains JAX example code for the Phoenix recommendation system, which powers content ranking and retrieval. Phoenix uses transformer-based architectures for both **retrieval** (finding relevant candidates from millions of items) and **ranking** (ordering a smaller set of candidates by predicted engagement).
+This repository contains JATwitter example code for the Phoenix recommendation system, which powers content ranking and retrieval. Phoenix uses transformer-based architectures for both **retrieval** (finding relevant candidates from millions of items) and **ranking** (ordering a smaller set of candidates by predicted engagement).
 
 > **Note:** The sample transformer implementation in this repository is ported from the [Grok-1 open source release](https://github.com/xai-org/grok-1) by xAI. The core transformer architecture comes from Grok-1, adapted here for recommendation system use cases with custom input embeddings and attention masking for candidate isolation. This code is representative of the model used internally with the exception of specific scaling optimizations.
 
@@ -69,7 +69,7 @@ The ranking model uses a transformer architecture where **candidates cannot atte
 #### Ranking Model Architecture
 
 ```
-                              PHOENIX RANKING MODEL
+                              PHOENITwitter RANKING MODEL
     ┌────────────────────────────────────────────────────────────────────────────┐
     │                                                                            │
     │                              OUTPUT LOGITS                                 │

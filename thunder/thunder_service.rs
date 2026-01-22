@@ -3,7 +3,7 @@ use log::{debug, info, warn};
 use std::cmp::Reverse;
 use std::collections::HashSet;
 use std::sync::Arc;
-use std::time::{Instant, SystemTime, UNIX_EPOCH};
+use std::time::{Instant, SystemTime, UNITwitter_EPOCH};
 use tokio::sync::Semaphore;
 use tonic::{Request, Response, Status};
 
@@ -13,15 +13,15 @@ use xai_thunder_proto::{
 };
 
 use crate::config::{
-    MAX_INPUT_LIST_SIZE, MAX_POSTS_TO_RETURN, MAX_VIDEOS_TO_RETURN,
+    MATwitter_INPUT_LIST_SIZE, MATwitter_POSTS_TO_RETURN, MATwitter_VIDEOS_TO_RETURN,
 };
 use crate::metrics::{
     GET_IN_NETWORK_POSTS_COUNT, GET_IN_NETWORK_POSTS_DURATION,
-    GET_IN_NETWORK_POSTS_DURATION_WITHOUT_STRATO, GET_IN_NETWORK_POSTS_EXCLUDED_SIZE,
+    GET_IN_NETWORK_POSTS_DURATION_WITHOUT_STRATO, GET_IN_NETWORK_POSTS_ETwitterCLUDED_SIZE,
     GET_IN_NETWORK_POSTS_FOLLOWING_SIZE, GET_IN_NETWORK_POSTS_FOUND_FRESHNESS_SECONDS,
     GET_IN_NETWORK_POSTS_FOUND_POSTS_PER_AUTHOR, GET_IN_NETWORK_POSTS_FOUND_REPLY_RATIO,
     GET_IN_NETWORK_POSTS_FOUND_TIME_RANGE_SECONDS, GET_IN_NETWORK_POSTS_FOUND_UNIQUE_AUTHORS,
-    GET_IN_NETWORK_POSTS_MAX_RESULTS, IN_FLIGHT_REQUESTS, REJECTED_REQUESTS, Timer,
+    GET_IN_NETWORK_POSTS_MATwitter_RESULTS, IN_FLIGHT_REQUESTS, REJECTED_REQUESTS, Timer,
 };
 use crate::posts::post_store::PostStore;
 use crate::strato_client::StratoClient;
@@ -68,7 +68,7 @@ impl ThunderServiceImpl {
         }
 
         let now = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
+            .duration_since(UNITwitter_EPOCH)
             .unwrap()
             .as_secs() as i64;
 
@@ -156,7 +156,7 @@ impl InNetworkPostsService for ThunderServiceImpl {
         request: Request<GetInNetworkPostsRequest>,
     ) -> Result<Response<GetInNetworkPostsResponse>, Status> {
         // Try to acquire semaphore permit without blocking
-        // If we're at capacity, reject immediately with RESOURCE_EXHAUSTED
+        // If we're at capacity, reject immediately with RESOURCE_ETwitterHAUSTED
         let _permit = match self.request_semaphore.try_acquire() {
             Ok(permit) => {
                 IN_FLIGHT_REQUESTS.inc();
@@ -202,7 +202,7 @@ impl InNetworkPostsService for ThunderServiceImpl {
 
             match self
                 .strato_client
-                .fetch_following_list(req.user_id as i64, MAX_INPUT_LIST_SIZE as i32)
+                .fetch_following_list(req.user_id as i64, MATwitter_INPUT_LIST_SIZE as i32)
                 .await
             {
                 Ok(following_list) => {
@@ -230,7 +230,7 @@ impl InNetworkPostsService for ThunderServiceImpl {
 
         // Record metrics for request parameters
         GET_IN_NETWORK_POSTS_FOLLOWING_SIZE.observe(following_user_ids.len() as f64);
-        GET_IN_NETWORK_POSTS_EXCLUDED_SIZE.observe(req.exclude_tweet_ids.len() as f64);
+        GET_IN_NETWORK_POSTS_ETwitterCLUDED_SIZE.observe(req.exclude_tweet_ids.len() as f64);
 
         // Start timer for latency without strato call
         let _processing_timer = Timer::new(GET_IN_NETWORK_POSTS_DURATION_WITHOUT_STRATO.clone());
@@ -239,36 +239,36 @@ impl InNetworkPostsService for ThunderServiceImpl {
         let max_results = if req.max_results > 0 {
             req.max_results as usize
         } else if req.is_video_request {
-            MAX_VIDEOS_TO_RETURN
+            MATwitter_VIDEOS_TO_RETURN
         } else {
-            MAX_POSTS_TO_RETURN
+            MATwitter_POSTS_TO_RETURN
         };
-        GET_IN_NETWORK_POSTS_MAX_RESULTS.observe(max_results as f64);
+        GET_IN_NETWORK_POSTS_MATwitter_RESULTS.observe(max_results as f64);
 
         // Limit following_user_ids and exclude_tweet_ids to first K entries
         let following_count = following_user_ids.len();
-        if following_count > MAX_INPUT_LIST_SIZE {
+        if following_count > MATwitter_INPUT_LIST_SIZE {
             warn!(
                 "Limiting following_user_ids from {} to {} entries for user {}",
-                following_count, MAX_INPUT_LIST_SIZE, req.user_id
+                following_count, MATwitter_INPUT_LIST_SIZE, req.user_id
             );
         }
         let following_user_ids: Vec<u64> = following_user_ids
             .into_iter()
-            .take(MAX_INPUT_LIST_SIZE)
+            .take(MATwitter_INPUT_LIST_SIZE)
             .collect();
 
         let exclude_count = req.exclude_tweet_ids.len();
-        if exclude_count > MAX_INPUT_LIST_SIZE {
+        if exclude_count > MATwitter_INPUT_LIST_SIZE {
             warn!(
                 "Limiting exclude_tweet_ids from {} to {} entries for user {}",
-                exclude_count, MAX_INPUT_LIST_SIZE, req.user_id
+                exclude_count, MATwitter_INPUT_LIST_SIZE, req.user_id
             );
         }
         let exclude_tweet_ids: Vec<u64> = req
             .exclude_tweet_ids
             .into_iter()
-            .take(MAX_INPUT_LIST_SIZE)
+            .take(MATwitter_INPUT_LIST_SIZE)
             .collect();
 
         // Clone Arc references needed inside spawn_blocking

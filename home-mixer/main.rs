@@ -47,8 +47,8 @@ async fn main() -> anyhow::Result<()> {
 
     grpc_routes.add_service(
         pb::scored_posts_service_server::ScoredPostsServiceServer::new(service)
-            .max_decoding_message_size(params::MAX_GRPC_MESSAGE_SIZE)
-            .max_encoding_message_size(params::MAX_GRPC_MESSAGE_SIZE)
+            .max_decoding_message_size(params::MATwitter_GRPC_MESSAGE_SIZE)
+            .max_encoding_message_size(params::MATwitter_GRPC_MESSAGE_SIZE)
             .accept_compressed(CompressionEncoding::Gzip)
             .accept_compressed(CompressionEncoding::Zstd)
             .send_compressed(CompressionEncoding::Gzip)

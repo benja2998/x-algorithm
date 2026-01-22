@@ -28,7 +28,7 @@ impl Source<ScoredPostsQuery, PostCandidate> for ThunderSource {
         let request = GetInNetworkPostsRequest {
             user_id: query.user_id as u64,
             following_user_ids: following_list.iter().map(|&id| id as u64).collect(),
-            max_results: p::THUNDER_MAX_RESULTS,
+            max_results: p::THUNDER_MATwitter_RESULTS,
             exclude_tweet_ids: vec![],
             algorithm: "default".to_string(),
             debug: false,

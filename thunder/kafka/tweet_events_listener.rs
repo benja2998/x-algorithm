@@ -206,7 +206,7 @@ async fn process_message_batch(
     let len_posts = results.len();
 
     let now_secs = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
+        .duration_since(std::time::UNITwitter_EPOCH)
         .unwrap()
         .as_secs() as i64;
 

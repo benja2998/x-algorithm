@@ -28,7 +28,7 @@ impl Source<ScoredPostsQuery, PostCandidate> for PhoenixSource {
 
         let response = self
             .phoenix_retrieval_client
-            .retrieve(user_id, sequence.clone(), p::PHOENIX_MAX_RESULTS)
+            .retrieve(user_id, sequence.clone(), p::PHOENITwitter_MATwitter_RESULTS)
             .await
             .map_err(|e| format!("PhoenixSource: {}", e))?;
 

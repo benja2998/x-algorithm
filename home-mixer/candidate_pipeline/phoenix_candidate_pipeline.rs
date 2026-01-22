@@ -109,7 +109,7 @@ impl PhoenixCandidatePipeline {
         let filters: Vec<Box<dyn Filter<ScoredPostsQuery, PostCandidate>>> = vec![
             Box::new(DropDuplicatesFilter),
             Box::new(CoreDataHydrationFilter),
-            Box::new(AgeFilter::new(Duration::from_secs(params::MAX_POST_AGE))),
+            Box::new(AgeFilter::new(Duration::from_secs(params::MATwitter_POST_AGE))),
             Box::new(SelfTweetFilter),
             Box::new(RetweetDeduplicationFilter),
             Box::new(IneligibleSubscriptionFilter),

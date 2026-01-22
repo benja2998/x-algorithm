@@ -1,4 +1,4 @@
-# Copyright 2026 X.AI Corp.
+# Copyright 2026 Twitter.AI Corp.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

@@ -49,7 +49,7 @@ impl WeightedScorer {
         let combined_score = Self::apply(s.favorite_score, p::FAVORITE_WEIGHT)
             + Self::apply(s.reply_score, p::REPLY_WEIGHT)
             + Self::apply(s.retweet_score, p::RETWEET_WEIGHT)
-            + Self::apply(s.photo_expand_score, p::PHOTO_EXPAND_WEIGHT)
+            + Self::apply(s.photo_expand_score, p::PHOTO_ETwitterPAND_WEIGHT)
             + Self::apply(s.click_score, p::CLICK_WEIGHT)
             + Self::apply(s.profile_click_score, p::PROFILE_CLICK_WEIGHT)
             + Self::apply(s.vqv_score, vqv_weight)

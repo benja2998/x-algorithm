@@ -4,7 +4,7 @@ use crate::clients::phoenix_prediction_client::PhoenixPredictionClient;
 use crate::util::request_util;
 use std::collections::HashMap;
 use std::sync::Arc;
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime, UNITwitter_EPOCH};
 use tonic::async_trait;
 use xai_candidate_pipeline::scorer::Scorer;
 use xai_recsys_proto::{ActionName, ContinuousActionName};
@@ -152,7 +152,7 @@ impl PhoenixScorer {
 
     fn current_timestamp_millis() -> Option<u64> {
         SystemTime::now()
-            .duration_since(UNIX_EPOCH)
+            .duration_since(UNITwitter_EPOCH)
             .ok()
             .map(|duration| duration.as_millis() as u64)
     }

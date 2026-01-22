@@ -1,6 +1,6 @@
-# X For You Feed Algorithm
+# Twitter For You Feed Algorithm
 
-This repository contains the core recommendation system powering the "For You" feed on X. It combines in-network content (from accounts you follow) with out-of-network content (discovered through ML-based retrieval) and ranks everything using a Grok-based transformer model.
+This repository contains the core recommendation system powering the "For You" feed on Twitter. It combines in-network content (from accounts you follow) with out-of-network content (discovered through ML-based retrieval) and ranks everything using a Grok-based transformer model.
 
 > **Note:** The transformer implementation is ported from the [Grok-1 open source release](https://github.com/xai-org/grok-1) by xAI, adapted for recommendation system use cases.
 
@@ -44,7 +44,7 @@ We have eliminated every single hand-engineered feature and most heuristics from
                                                │
                                                ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                         HOME MIXER                                          │
+│                                         HOME MITwitterER                                          │
 │                                    (Orchestration Layer)                                    │
 ├─────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                             │
@@ -60,7 +60,7 @@ We have eliminated every single hand-engineered feature and most heuristics from
 │   ┌─────────────────────────────────────────────────────────────────────────────────────┐   │
 │   │                                  CANDIDATE SOURCES                                  │   │
 │   │         ┌─────────────────────────────┐    ┌────────────────────────────────┐       │   │
-│   │         │        THUNDER              │    │     PHOENIX RETRIEVAL          │       │   │
+│   │         │        THUNDER              │    │     PHOENITwitter RETRIEVAL          │       │   │
 │   │         │    (In-Network Posts)       │    │   (Out-of-Network Posts)       │       │   │
 │   │         │                             │    │                                │       │   │
 │   │         │  Posts from accounts        │    │  ML-based similarity search    │       │   │
